@@ -9,6 +9,8 @@ import android.widget.RadioGroup
 import android.widget.SeekBar
 import android.widget.SeekBar.OnSeekBarChangeListener
 import android.widget.Toast
+import it.ngallazzi.fancyswitch.FancyState
+import it.ngallazzi.fancyswitch.FancySwitch
 import kotlinx.android.synthetic.main.activity_uji_lab.*
 
 class UjiLab : AppCompatActivity() {
@@ -39,26 +41,34 @@ class UjiLab : AppCompatActivity() {
 
         })
 
-        radioGroup.setOnCheckedChangeListener(object : RadioGroup.OnCheckedChangeListener{
-            override fun onCheckedChanged(p0: RadioGroup?, p1: Int) {
-
-               val resultt =  when(p1){
-                   R.id.radioButton -> "Option 1"
-                   R.id.radioButton2 -> "Option 2"
-                   R.id.radioButton3 -> "Option 3"
-                   else -> "No Option"
-                }
-                Toast.makeText(this@UjiLab, "Pilihannya adalah ${resultt}",Toast.LENGTH_LONG).show()
-                groupCombo = p1
+        radioGroup.setOnCheckedChangeListener { p0, p1 ->
+            val resultt = when (p1) {
+                R.id.radioButton -> "Option 1"
+                R.id.radioButton2 -> "Option 2"
+                R.id.radioButton3 -> "Option 3"
+                else -> "No Option"
             }
+            Toast.makeText(this@UjiLab, "Pilihannya adalah ${resultt}", Toast.LENGTH_LONG).show()
+            groupCombo = p1
+        }
 
-        })
+        switch1.setOnCheckedChangeListener { p0, p1 ->
+            Toast.makeText(this@UjiLab, "nilainya adalah ${p1}", Toast.LENGTH_SHORT).show()
+            switch1.setText(p1.toString())
+            switchComp = p1
+        }
 
-        switch1.setOnCheckedChangeListener(object : CompoundButton.OnCheckedChangeListener{
-            override fun onCheckedChanged(p0: CompoundButton?, p1: Boolean) {
-                Toast.makeText(this@UjiLab,"nilainya adalah ${p1}",Toast.LENGTH_SHORT).show()
-                switch1.setText(p1.toString())
-                switchComp = p1
+        fancySwitch.setSwitchStateChangedListener(object : FancySwitch.StateChangedListener{
+            override fun onChanged(newState: FancyState) {
+
+                if(newState.id == FancyState.State.ON){
+                    Toast.makeText(this@UjiLab,"Nilainya adalah on",Toast.LENGTH_SHORT).show()
+                }else{
+                    Toast.makeText(this@UjiLab,"Nilainya adalah off",Toast.LENGTH_SHORT).show()
+                }
+
+
+
             }
         })
 
