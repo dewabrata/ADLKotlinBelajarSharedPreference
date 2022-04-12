@@ -24,10 +24,14 @@ class MainActivity : AppCompatActivity() {
 
 
         btnLogin.setOnClickListener({
+            var editor = sharedPreference.edit()
             if(checkBox.isChecked){
-                var editor = sharedPreference.edit()
+
                 editor.putString("username", txtUsername.text.toString())
                 editor.putBoolean("checkbox", true)
+                editor.commit()
+            }else{
+                editor.remove("username")
                 editor.commit()
             }
         })
